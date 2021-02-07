@@ -1,0 +1,10 @@
+ERRORS and WARNINGS:
+------------
+
+ERROR:
+ Error in df[[get("listcol")]][[i]]: subscript out of bounds
+ 
+URL
+ https://news.google.com/rss/search?q=when:24h+allinurl:jacobinmag.com&hl=en-US&gl=US&ceid=US:en 
+---------
+

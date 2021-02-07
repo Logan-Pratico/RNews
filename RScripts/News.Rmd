@@ -11,48 +11,67 @@ output:
 
 `r Sys.Date()`
 
-### COVID
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(here)
-library(formatR)
-library(stringr)
+# library(here)
+# library(formatR)
+# library(stringr)
+# library(purrr)
+
+categories <- c("COVID_News", "AI_News", "Quantum_News", "Energy_News", "Disinformation_News")
 ```
 
 
-```{r, include=FALSE}
-# Function to add link 
-myFun <- function(text, link, inline=TRUE) {
-  if(inline) {
-    paste("[", text, "](", link, ")", sep="")
+```{r, include=FALSE, comment=NA, results='asis'}
+# Function to add link
+myFun <- function(text, link, inline = TRUE) {
+  if (inline) {
+    paste("[", text, "](", link, ")", sep = "")
   } else {
-    cat("[", text, "](", link, ")", sep="")
+    cat("[", text, "](", link, ")", sep = "")
   }
 }
 ```
 
-```{r, echo=FALSE, comment=NA}
-item <- read.csv(here("output", Sys.Date(), "COVID_News", "vaccine.csv"), header = TRUE, sep = ",")
-
-```
-```{r, echo= FALSE, results='asis'}
-for (i in 1:10){
-   cat('\n') 
-   string = myFun(item[i,1], item[i,2])
-   cat("# ", string, "\n") 
-   cat('\n') 
-   if(nchar(item[i,3]) > 300){
-    cat(str_wrap(stringr::str_extract(item[i,3], "^.{300}"), width = 80), "...")
-   }else{
-     cat(str_wrap(item[i,3], width = 80))
-   }
-   cat('\n')
-
+```{r, echo= FALSE, results='asis', comment=NA}
+parseItems <- function(item) {
+  if (nrow(item) < 20) {
+    count <- nrow(item)
+  } else {
+    count <- 10
+  }
+  for (i in 1:count) {
+    cat("\n")
+    string <- myFun(item[i, 1], item[i, 2])
+    cat("### ", string, "\n")
+    cat("\n")
+    if (nchar(item[i, 3]) > 300) {
+      cat(str_wrap(stringr::str_extract(item[i, 3], "^.{300}"), width = 80), "...")
+    } else {
+      cat(str_wrap(item[i, 3], width = 80))
+    }
+    cat("\n")
+  }
 }
 ```
 
+```{r, echo=FALSE, comment=NA, results='asis'}
+# item <- read.csv(here("output", Sys.Date(), "COVID_News", "vaccine.csv"), header = TRUE, sep = ",")
+walk(categories, function(category) {
+  data_dir <- here("output", Sys.Date(), category)
+  filePaths <- list.files(data_dir, "\\.csv$", full.names = TRUE)
+  if (length(filePaths != 0)) {
+    cat("\n")
+    cat("# ", category)
+    cat("\n")
 
+    item <- do.call(rbind, lapply(filePaths, read.csv))
+
+    parseItems(item)
+  }
+})
+```
 
 
 
