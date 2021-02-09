@@ -13,7 +13,7 @@ urls <- c(
   "https://rss.nytimes.com/services/xml/rss/nyt/World.xml",
   "https://rss.nytimes.com/services/xml/rss/nyt/Science.xml",
   "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml",
-  "https://www.vox.com/rss/index.xml", # VOX
+  #"https://www.vox.com/rss/index.xml", # VOX
   "https://news.google.com/rss/search?q=when:24h+allinurl:reuters.com&ceid=US:en&hl=en-US&gl=US", # Reuters
   "https://news.google.com/rss/search?q=when:24h+allinurl:apnews.com&hl=en-US&gl=US&ceid=US:en", # AP
   "https://news.google.com/rss/search?q=when:24h+allinurl:theatlantic.com&hl=en-US&gl=US&ceid=US:en", # Atlantic

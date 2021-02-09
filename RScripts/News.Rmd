@@ -63,7 +63,7 @@ walk(categories, function(category) {
   filePaths <- list.files(data_dir, "\\.csv$", full.names = TRUE)
   if (length(filePaths != 0)) {
     cat("\n")
-    cat("# ", category)
+    cat("# ", sub("\\_.*", "", category))
     cat("\n")
 
     item <- do.call(rbind, lapply(filePaths, read.csv))
